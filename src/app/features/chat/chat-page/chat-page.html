@@ -1,0 +1,97 @@
+<div class="chat-container">
+
+  <div class="sidebar">
+<h2>Documents</h2>
+
+<label class="upload-button">
+
+  + Upload document
+
+  <input
+    type="file"
+    hidden
+    (change)="onFileSelected($event)"
+  />
+
+</label>
+
+  @if(uploadMessage()) {
+
+    <div class="upload-status">
+      {{ uploadMessage() }}
+    </div>
+
+    <div class="documents-list">
+
+  @for(document of documents(); track document.id) {
+
+    <div class="document-item">
+
+      <input
+        type="checkbox"
+
+        [checked]="document.selected"
+
+        (change)="toggleDocument(document.id)"
+      />
+
+      📄 {{ document.name }}
+
+    </div>
+  }
+
+</div>
+  }
+
+</div>
+
+  <div class="chat-area">
+
+   <div class="messages">
+
+  @for(message of messages(); track $index) {
+
+    <div
+      class="message"
+      [class.user]="message.role === 'user'"
+      [class.ai]="message.role === 'assistant'"
+    >
+
+      @if(message.loading) {
+
+        <div class="typing">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+      } @else {
+
+        {{ message.content }}
+
+      }
+
+    </div>
+
+  }
+
+</div>
+
+    <div class="input-area">
+
+      <input
+        type="text"
+        placeholder="Pose une question..."
+        [(ngModel)]="message"
+        (keyup.enter)="sendMessage()"
+      />
+
+      <button (click)="sendMessage()">
+        Envoyer
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
