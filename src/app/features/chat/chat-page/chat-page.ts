@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChatService } from '../../../core/services/chat-service';
@@ -13,7 +13,13 @@ import { DocumentModel } from '../../../core/model/document-model';
   templateUrl: './chat-page.html',
   styleUrl: './chat-page.css'
 })
-export class ChatPage {
+export class ChatPage implements OnInit {
+
+  ngOnInit(): void {
+
+  this.loadDocuments();
+
+}
 
   message = '';
 
@@ -208,6 +214,32 @@ toggleDocument(id: string) {
     }))
 
   );
+}
+
+private loadDocuments() {
+
+  this.documentService.getDocuments()
+
+    .subscribe({
+
+      next: (documents) => {
+
+        this.documents.set(
+
+          documents.map(document => ({
+            
+            ...document,
+
+            id: document.id,
+            name: document.name,
+            selected: true
+
+          }))
+        );
+      }
+
+    });
+
 }
 
 }

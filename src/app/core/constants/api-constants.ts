@@ -9,4 +9,7 @@ export class ApiConstants {
   static readonly DOCUMENT_UPLOAD =
     `${ApiConstants.BASE_URL}/documents/upload`;
 
+      static readonly DOCUMENTS =
+    `${ApiConstants.BASE_URL}/documents`;
+
 }
